@@ -8,3 +8,4 @@ from .dtc import DTC  # noqa
 from .rsi import RSI  # noqa
 from .red_mmi import RedundancyMMI  # noqa
 from .syn_mmi import SynergyMMI  # noqa
+from .dyn_oinfo import dOinfo  # noqa
