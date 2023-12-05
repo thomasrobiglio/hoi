@@ -3,7 +3,7 @@ from functools import partial
 import jax
 import jax.numpy as jnp
 
-from .entropies import get_entropy
+from .entropies import prepare_for_entropy, get_entropy
 
 ###############################################################################
 ###############################################################################
@@ -31,6 +31,27 @@ def get_cmi(method="gcmi", **kwargs):
     """
     _entropy = get_entropy(method=method, **kwargs)
     return partial(cmi_fcn, entropy_fcn=_entropy)
+
+###############################################################################
+###############################################################################
+#                             PREPROCESSING
+###############################################################################
+###############################################################################
+
+
+def prepare_for_cmi(x, y, z, method, **kwargs):
+    """Prepare the data before computing conditional mutual information."""
+    x, _ = prepare_for_entropy(x, method, **kwargs.copy())
+    x, kwargs = prepare_for_entropy(_, method, **kwargs.copy())
+
+    return x, y, z, kwargs
+
+
+@partial(jax.jit, static_argnums=(2))
+def compute_cmi_comb(inputs, comb, cmi=None):
+    x, y, z = inputs
+    x_c = x[:, comb, :]
+    return inputs, cmi(x_c, y, z)
 
 
 ###############################################################################
