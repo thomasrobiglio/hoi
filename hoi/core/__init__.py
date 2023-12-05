@@ -9,3 +9,4 @@ from .entropies import (  # noqa
     entropy_kernel,
 )
 from .mi import mi_gcmi_gg, mi_gcmi_gd  # noqa
+from .cmi import get_cmi, cmi_fcn
