@@ -32,6 +32,7 @@ def get_cmi(method="gcmi", **kwargs):
     _entropy = get_entropy(method=method, **kwargs)
     return partial(cmi_fcn, entropy_fcn=_entropy)
 
+
 ###############################################################################
 ###############################################################################
 #                             PREPROCESSING

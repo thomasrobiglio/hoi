@@ -10,11 +10,12 @@ from hoi.core.entropies import prepare_for_entropy
 from hoi.core.cmi import get_cmi, compute_cmi_comb
 from hoi.utils.progressbar import get_pbar
 
+
 class dOinfo(HOIEstimator):
 
     """dynamical O-information (dOinfo).
-    
-    Dynamical O-information is defined to generalize the O-information 
+
+    Dynamical O-information is defined to generalize the O-information
     to the scope of handling multivariate time series which,
     apart from equal-time correlations, takes into account also
     lagged correlations.
@@ -34,21 +35,21 @@ class dOinfo(HOIEstimator):
 
         \Delta_n = (1-n)I(Y;X^n)+\sum_{j=1}^n I(Y;X^n_{-j})
 
-    The additional term in :math: `\Delta_n` is the variation of the total 
+    The additional term in :math: `\Delta_n` is the variation of the total
     O-information when the new variable :math: `Y` is added.
 
-    In order to remove shared information due to common history and input signals 
-    the dynamical O-information is defined by conditioning the gradient presented 
+    In order to remove shared information due to common history and input signals
+    the dynamical O-information is defined by conditioning the gradient presented
     above on the past history of the target variable :math: `Y`:
 
     .. math::
 
         d\Omega(Y;X^n)\equiv (1-n)\mathcal{I}(Y;X^n|Y_0)+\sum_{j=1}^n \mathcal{I}(Y;X^n\setminus X_j|Y_0)
 
-    where :math: `Y_0(t)=\left(y(t),y(t-1),...,y(t-m+1)\right)` and 
-    :math: `Y=Y(t)=y(t+1)` are the samples of :math: `Y` divided into 
+    where :math: `Y_0(t)=\left(y(t),y(t-1),...,y(t-m+1)\right)` and
+    :math: `Y=Y(t)=y(t+1)` are the samples of :math: `Y` divided into
     what we consider to be the past of the variable and the last instance.
-    The parameter :math: `m` is the temporal order of the time series, 
+    The parameter :math: `m` is the temporal order of the time series,
     corresponding to what we consider to be the relevant time scale of the process.
 
     .. warning::
@@ -110,7 +111,7 @@ class dOinfo(HOIEstimator):
             The NumPy array containing values of higher-rder interactions of
             shape (n_multiplets, n_variables)
         """
-            # ________________________________ I/O ________________________________
+        # ________________________________ I/O ________________________________
         # check minsize and maxsize
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
@@ -159,7 +160,3 @@ class dOinfo(HOIEstimator):
             offset += n_combs
 
         return np.asarray(hoi)
-
-
-
-    
